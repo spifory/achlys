@@ -15,35 +15,50 @@ pub async fn main(path: Path<u64>, hb: Data<Handlebars<'_>>) -> HttpResponse {
     let steam_id = SteamId::new(path.into_inner());
 
     if let Ok(players) = steam.get_player_summaries(vec![steam_id]).await {
-        for p in players.iter() {
-            if p.game_id.is_none() {
-                let body = hb
-                    .render(
-                        "main",
-                        &json!({
-                            "title": "Offline",
-                            "description": "Currently not playing anything"
-                        }),
-                    )
-                    .unwrap();
+        let player = players.first();
 
-                return HttpResponse::Ok().body(body);
-            } else {
-                let description =
-                    format!("Currently playing {}", p.game_extra_info.clone().unwrap());
-                let body = hb
+        if player.is_none() {
+            let body = hb
+                .render(
+                    "main",
+                    &json!({
+                        "title": "Unprocessable Entity",
+                        "description": format!("Invalid user ID ({}) passed", steam_id.0)
+                    }),
+                )
+                .unwrap();
+            return HttpResponse::UnprocessableEntity().body(body);
+        }
+
+        if player.unwrap().game_id.is_none() {
+            let body = hb
+                .render(
+                    "main",
+                    &json!({
+                        "title": "Offline",
+                        "description": "Currently not playing anything"
+                    }),
+                )
+                .unwrap();
+
+            return HttpResponse::Ok().body(body);
+        } else {
+            let description = format!(
+                "Currently playing {}",
+                player.unwrap().game_extra_info.clone().unwrap()
+            );
+            let body = hb
                     .render(
                         "main",
                         &json!({
-                                "icon": format!("https://cdn.cloudflare.steamstatic.com/steam/apps/{}/logo.png", p.game_id.clone().unwrap()),
-                                "title": p.game_extra_info,
+                                "icon": format!("https://cdn.cloudflare.steamstatic.com/steam/apps/{}/logo.png", player.unwrap().game_id.clone().unwrap()),
+                                "title": player.unwrap().game_extra_info,
                                 "description": description
                             }),
                     )
                     .unwrap();
 
-                return HttpResponse::Ok().body(body);
-            }
+            return HttpResponse::Ok().body(body);
         }
     }
 
