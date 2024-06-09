@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css" />
+</head>
+<main class="container-fluid">
+  {{#if icon}}
+  <img src={{icon}} alt="{{title}}'s icon" loading="eager" width="110px"/>
+  {{/if}}
+  <div id="text">
+    <div id="title">{{title}}</div>
+    <div id="description">{{description}}</div>
+  </div>
+</main>
+
+</html>
+
+<style>
+  main {
+    display: flex;
+    border-radius: 10px;
+    width: 150px;
+  }
+
+  #text {
+    padding-left: 10px;
+    align-self: flex-end;
+  }
+
+  #title {
+    font-weight: bold;
+  }
+</style>
