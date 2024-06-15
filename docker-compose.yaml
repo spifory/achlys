@@ -1,0 +1,12 @@
+services:
+  steam-currently-playing:
+    restart: unless-stopped
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      STEAM_API_KEY: ${STEAM_API_KEY?Missing Steam API key}
+      PORT: ${PORT:-3000}
+    ports:
+      - ${PORT:-3000}:${PORT:-3000}
