@@ -1315,6 +1315,7 @@ dependencies = [
  "env_logger",
  "handlebars",
  "log",
+ "mime",
  "serde_json",
  "steam-rs",
 ]

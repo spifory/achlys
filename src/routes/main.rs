@@ -4,6 +4,7 @@ use actix_web::{
     get,
     web::{Data, Path},
     HttpResponse,
+    http::header::ContentType
 };
 use handlebars::Handlebars;
 use serde_json::json;
@@ -27,7 +28,7 @@ pub async fn main(path: Path<u64>, hb: Data<Handlebars<'_>>) -> HttpResponse {
                     }),
                 )
                 .unwrap();
-            return HttpResponse::UnprocessableEntity().body(body);
+            return HttpResponse::UnprocessableEntity().insert_header(ContentType(mime::IMAGE_SVG)).body(body);
         }
 
         if player.unwrap().game_id.is_none() {
@@ -41,7 +42,7 @@ pub async fn main(path: Path<u64>, hb: Data<Handlebars<'_>>) -> HttpResponse {
                 )
                 .unwrap();
 
-            return HttpResponse::Ok().body(body);
+            return HttpResponse::Ok().insert_header(ContentType(mime::IMAGE_SVG)).body(body);
         } else {
             let description = format!(
                 "Currently playing {}",
@@ -58,7 +59,7 @@ pub async fn main(path: Path<u64>, hb: Data<Handlebars<'_>>) -> HttpResponse {
                     )
                     .unwrap();
 
-            return HttpResponse::Ok().body(body);
+            return HttpResponse::Ok().insert_header(ContentType(mime::IMAGE_SVG)).body(body);
         }
     }
 
