@@ -1,4 +1,4 @@
-# steam-currently-playing
+# achlys
 An project deigned to show what you are currently playing on [Steam](https://store.steampowered.com).
 
 Can be used for git instances (Github, Codeberg, Gitlab, ...) profile README's or websites!

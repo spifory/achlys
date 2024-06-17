@@ -1,5 +1,5 @@
 services:
-  steam-currently-playing:
+  achlys:
     restart: unless-stopped
     pull_policy: build
     build:
