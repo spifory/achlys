@@ -8,5 +8,6 @@ services:
     environment:
       STEAM_API_KEY: ${STEAM_API_KEY?Missing Steam API key}
       PORT: ${PORT:-3000}
+      RUST_LOG: ${RUST_LOG:-info}
     ports:
       - ${PORT:-3000}:${PORT:-3000}
