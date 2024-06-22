@@ -30,7 +30,7 @@ async fn main() -> io::Result<()> {
             .service(routes::main::main)
     })
     .bind((
-        "127.0.0.1",
+        "0.0.0.0",
         env::var("PORT")
             .unwrap_or("3000".to_string())
             .parse::<u16>()

@@ -10,4 +10,4 @@ services:
       PORT: ${PORT:-3000}
       RUST_LOG: ${RUST_LOG:-info}
     ports:
-      - ${PORT:-3000}:${PORT:-3000}
+      - "127.0.0.1:${PORT:-3000}:${PORT:-3000}"
