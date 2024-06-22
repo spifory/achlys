@@ -1,38 +1,57 @@
-<svg width="500" height="300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="100" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>{{title}}</title>
+  <desc>{{description}}</desc>
 
-  <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" type="text/css"
-    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
-  <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" type="text/css"
-    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css" />
-
-    <title>{{title}}</title>
-    <desc>{{description}}</desc>
-
-  <foreignObject width="500" height="200">
-    <main class="container-fluid" xmlns="http://www.w3.org/1999/xhtml">
+  <foreignObject height="100" width="400" id="card">
+    <div class="container" xmlns="http://www.w3.org/1999/xhtml">
       {{#if icon}}
-      <img src="{{icon}}" alt="{{title}}'s icon" loading="eager" width="110px" />
+      <embed type="image/png" src="{{icon}}" title="{{title}}'s icon" height="100" />
       {{/if}}
-      <div id="text">
-        <div id="title">{{title}}</div>
-        <div id="description">{{description}}</div>
-      </div>
-    </main>
-    <style>
-      main {
-        display: flex;
-        border-radius: 10px;
-        width: 150px;
-      }
-
-      #text {
-        padding-left: 10px;
-        align-self: flex-end;
-      }
-
-      #title {
-        font-weight: bold;
-      }
-    </style>
+      <span>
+        <h3>{{title}}</h3>
+        <p>{{description}}</p>
+      </span>
+    </div>
   </foreignObject>
+  <style>
+    :root {
+      --cyan-100: #c7d5e0;
+      --dark-blue-250: #2a475e;
+    }
+
+    * {
+      border-radius: 10px;
+    }
+
+    .container {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+
+    .container span {
+      float: right;
+      margin-left: 10px;
+    }
+
+    #card {
+      * {
+        font-family: 'Segoe UI', Ubuntu, Tahoma, Verdana, sans-serif;
+      }
+
+      @media (prefers-color-scheme: light) {
+        * {
+          background-color: var(--cyan-100);
+          color: var(--dark-blue-250);
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        * {
+          background-color: var(--dark-blue-250);
+          color: var(--cyan-100);
+        }
+      }
+    }
+  </style>
 </svg>
