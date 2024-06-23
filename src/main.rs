@@ -28,6 +28,7 @@ async fn main() -> io::Result<()> {
         App::new()
             .app_data(Data::new(handlebars.clone()))
             .service(routes::main::main)
+            .service(routes::main::redirect)
     })
     .bind((
         "0.0.0.0",

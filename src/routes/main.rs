@@ -2,13 +2,18 @@ use std::env;
 
 use actix_web::{
     get,
-    web::{Data, Path},
+    http::header::ContentType,
+    web::{Data, Path, Redirect},
     HttpResponse,
-    http::header::ContentType
 };
 use handlebars::Handlebars;
 use serde_json::json;
 use steam_rs::{steam_id::SteamId, Steam};
+
+#[get("/")]
+async fn redirect() -> Redirect {
+    Redirect::to("https://codeberg.org/spf/achlys").permanent()
+}
 
 #[get("/{id}")]
 pub async fn main(path: Path<u64>, hb: Data<Handlebars<'_>>) -> HttpResponse {
@@ -28,7 +33,9 @@ pub async fn main(path: Path<u64>, hb: Data<Handlebars<'_>>) -> HttpResponse {
                     }),
                 )
                 .unwrap();
-            return HttpResponse::UnprocessableEntity().insert_header(ContentType(mime::IMAGE_SVG)).body(body);
+            return HttpResponse::UnprocessableEntity()
+                .insert_header(ContentType(mime::IMAGE_SVG))
+                .body(body);
         }
 
         if player.unwrap().game_id.is_none() {
@@ -42,7 +49,9 @@ pub async fn main(path: Path<u64>, hb: Data<Handlebars<'_>>) -> HttpResponse {
                 )
                 .unwrap();
 
-            return HttpResponse::Ok().insert_header(ContentType(mime::IMAGE_SVG)).body(body);
+            return HttpResponse::Ok()
+                .insert_header(ContentType(mime::IMAGE_SVG))
+                .body(body);
         } else {
             let description = format!(
                 "Currently playing {}",
@@ -59,7 +68,9 @@ pub async fn main(path: Path<u64>, hb: Data<Handlebars<'_>>) -> HttpResponse {
                     )
                     .unwrap();
 
-            return HttpResponse::Ok().insert_header(ContentType(mime::IMAGE_SVG)).body(body);
+            return HttpResponse::Ok()
+                .insert_header(ContentType(mime::IMAGE_SVG))
+                .body(body);
         }
     }
 
